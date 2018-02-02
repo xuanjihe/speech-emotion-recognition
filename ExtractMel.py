@@ -92,7 +92,7 @@ def load_data():
     return mean1,std1,mean2,std2,mean3,std3
         
         
-def read_CASIA():
+def read_IEMOCAP():
     eps = 1e-5
     trnum = 1723
     tnum = 259
@@ -385,7 +385,7 @@ def read_CASIA():
 
 
 if __name__=='__main__':
-    read_CASIA()
+    read_IEMOCAP()
     #print "test_num:", test_num
     #print "train_num:", train_num
 #    n = wgn(x, 6)
