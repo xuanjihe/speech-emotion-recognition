@@ -11,10 +11,10 @@ from tensorflow.python.training import moving_averages
 # Importer and Exporting
 # ========
 
-tf.app.flags.DEFINE_string  ('data_path',  './IEMOCAP.pkl',   'total dataset includes training set, valid set and test set')
+tf.app.flags.DEFINE_string  ('data_path',  './IEMOCAP1.pkl',   'total dataset includes training set, valid set and test set')
 tf.app.flags.DEFINE_string  ('checkpoint', './checkpoint/',   'the checkpoint dir')
 tf.app.flags.DEFINE_string  ('model_name', 'model.ckpt',      'model name')
-tf.app.flags.DEFINE_string  ('pred_name',  './pred.pkl',        'the test output dir')
+tf.app.flags.DEFINE_string  ('pred_name',  './pred0.pkl',        'the test output dir')
 tf.app.flags.DEFINE_integer ('checkpoint_secs',  60,         'checkpoint saving interval in seconds')
 
 # Global Constants
@@ -39,16 +39,16 @@ tf.app.flags.DEFINE_float   ('relu_clip',        20.0,        'ReLU clipping val
 
 # Adam optimizer (http://arxiv.org/abs/1412.6980) parameters
 
-tf.app.flags.DEFINE_float   ('beta1',            0.9,         'beta 1 parameter of Adam optimizer')
-tf.app.flags.DEFINE_float   ('beta2',            0.999,       'beta 2 parameter of Adam optimizer')
+tf.app.flags.DEFINE_float   ('adam_beta1',            0.9,         'beta 1 parameter of Adam optimizer')
+tf.app.flags.DEFINE_float   ('adam_beta2',            0.999,       'beta 2 parameter of Adam optimizer')
 tf.app.flags.DEFINE_float   ('epsilon',          1e-8,        'epsilon parameter of Adam optimizer')
 tf.app.flags.DEFINE_float   ('learning_rate',    0.0001,       'learning rate of Adam optimizer')
 
 # Batch sizes
 
 tf.app.flags.DEFINE_integer ('train_batch_size', 40,           'number of elements in a training batch')
-tf.app.flags.DEFINE_integer ('batch_size',   200,           'number of elements in a validation batch')
-tf.app.flags.DEFINE_integer ('test_batch_size',  200,           'number of elements in a test batch')
+tf.app.flags.DEFINE_integer ('valid_batch_size',   40,           'number of elements in a validation batch')
+tf.app.flags.DEFINE_integer ('test_batch_size',  40,           'number of elements in a test batch')
 
 tf.app.flags.DEFINE_integer('save_steps', 10, 'the step to save checkpoint')
 
@@ -59,11 +59,12 @@ tf.app.flags.DEFINE_integer('linear_num', 786, 'hidden number of linear layer')
 tf.app.flags.DEFINE_integer('seq_len', 150, 'sequence length of lstm')
 tf.app.flags.DEFINE_integer('cell_num', 128, 'cell units of the lstm')
 tf.app.flags.DEFINE_integer('hidden1', 64, 'number of hidden units of fully connected layer')
-tf.app.flags.DEFINE_integer('hidden2', 10, 'number of softmax layer')
+tf.app.flags.DEFINE_integer('hidden2', 4, 'number of softmax layer')
 tf.app.flags.DEFINE_integer('attention_size', 1, 'attention_size')
 tf.app.flags.DEFINE_boolean('attention', False, 'whether to use attention, False mean use max-pooling')
 
 FLAGS = tf.app.flags.FLAGS
+
 
 class CRNN(object):
     def __init__(self, mode):
@@ -219,18 +220,18 @@ class CRNN(object):
                 x = self._batch_norm('bn1', x)
                 x = self._leaky_relu(x, 0.01)
                 x = self._max_pool(x, pool1_size, pool1_size)
-
+#                print x.get_shape()
             with tf.variable_scope('unit-2'):
                 x = self._conv2d(x, 'cnn-2',  filter_size, filters[0], filters[1], filter_strides)
                 x = self._batch_norm('bn2', x)
                 x = self._leaky_relu(x, 0.01)
                 x = self._max_pool(x, pool2_size, pool2_size)
-            
+#                print x.get_shape()
         with tf.variable_scope('linear'):
             # linear layer for dim reduction
             x = tf.reshape(x,[-1,p*filters[1]])
             x = self._linear(x,'linear1',[p*filters[1],FLAGS.linear_num])
-        
+#            print x.get_shape()
         with tf.variable_scope('lstm'):
             x = tf.reshape(x,[-1,FLAGS.seq_len,FLAGS.linear_num])
             
@@ -257,7 +258,7 @@ class CRNN(object):
                 outputs = tf.reshape(outputs, [-1, FLAGS.seq_len,2*FLAGS.cell_num, 1])
                 outputs = self._max_pool(outputs,[FLAGS.seq_len,1],[FLAGS.seq_len,1])
                 outputs = tf.reshape(outputs, [-1,2*FLAGS.cell_num])
-        
+#            print outputs.get_shape()
         
         with tf.variable_scope('dense'):
             y = self._linear(outputs,'dense-matmul',[2*FLAGS.cell_num,FLAGS.hidden1])

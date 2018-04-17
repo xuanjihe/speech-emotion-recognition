@@ -13,7 +13,7 @@ import cPickle
 import os
 FLAGS = crnn.FLAGS
 def load_data():
-    f = open('./IEMOCAP.pkl','rb')
+    f = open(FLAGS.data_path,'rb')
     train_data,train_label,test_data,test_label,valid_data,valid_label,Valid_label,\
         Test_label,pernums_test,pernums_valid = cPickle.load(f)
     return train_data,train_label
@@ -29,14 +29,15 @@ def train(train_dir=None, model_dir=None, mode='train'):
     model = crnn.CRNN(mode)
     model._build_model()
     global_step = tf.Variable(0, trainable=False)
-    
+    #sess1 = tf.InteractiveSession()
     #load training data
     train_data,train_label = load_data()
     train_label = dense_to_one_hot(train_label,4)
-    training_size = train_data[0]
+    training_size = train_data.shape[0]
     with tf.name_scope('cross_entropy'):
         cross_entropy = tf.nn.softmax_cross_entropy_with_logits(labels =  model.labels, logits =  model.logits)
         loss = tf.reduce_mean(cross_entropy)
+#        print model.logits.get_shape()  
     with tf.name_scope('accuracy'):
         correct_pred = tf.equal(tf.argmax(model.logits, 1), tf.argmax(model.labels,1))
         accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32)) 
@@ -50,6 +51,7 @@ def train(train_dir=None, model_dir=None, mode='train'):
                                         training_size/FLAGS.train_batch_size,
                                         FLAGS.decay_rate,
                                         staircase=True)
+        #print (lr.eval())        
         train_step = tf.train.AdamOptimizer(lr).minimize(loss,global_step=global_step)
         with tf.control_dependencies([train_step, variable_averages_op]):
             train_op = tf.no_op(name='train')

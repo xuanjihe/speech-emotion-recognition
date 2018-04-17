@@ -13,8 +13,9 @@ import cPickle
 from sklearn.metrics import recall_score as recall
 from sklearn.metrics import confusion_matrix as confusion
 FLAGS = crnn.FLAGS
+
 def load_data():
-    f = open('./IEMOCAP.pkl','rb')
+    f = open(FLAGS.data_path,'rb')
     train_data,train_label,test_data,test_label,valid_data,valid_label,Valid_label,\
         Test_label,pernums_test,pernums_valid = cPickle.load(f)
     return test_data,test_label,valid_data,valid_label,Valid_label,Test_label,pernums_test,pernums_valid
@@ -37,14 +38,14 @@ def evaluate():
         valid_label = dense_to_one_hot(valid_label,4)
         Test_label = dense_to_one_hot(Test_label,4)
         Valid_label = dense_to_one_hot(Valid_label,4)
-        test_size = test_data[0]
-        valid_size = valid_data[0]
+        test_size = test_data.shape[0]
+        valid_size = valid_data.shape[0]
         tnum = pernums_test.shape[0]
         vnum = pernums_valid.shape[0]
         pred_test_uw = np.empty((tnum,4),dtype = np.float32)
         pred_test_w = np.empty((tnum,4),dtype = np.float32)
-        valid_iter = divmod((valid_size),FLAGS.batch_size)[0]
-        test_iter = divmod((test_size),FLAGS.batch_size)[0]
+        valid_iter = divmod((valid_size),FLAGS.valid_batch_size)[0]
+        test_iter = divmod((test_size),FLAGS.test_batch_size)[0]
         y_pred_valid = np.empty((valid_size,4),dtype=np.float32)
         y_pred_test = np.empty((test_size,4),dtype=np.float32)
         y_test = np.empty((tnum,4),dtype=np.float32)
@@ -67,13 +68,13 @@ def evaluate():
                     #for validation data
                     index = 0
                     cost_valid = 0
-                    if(valid_size < FLAGS.batch_size):
+                    if(valid_size < FLAGS.valid_batch_size):
                         validate_feed = {model.inputs:valid_data,model.labels:Valid_label}
                         y_pred_valid,loss = sess.run([model.logits,cross_entropy],feed_dict = validate_feed)
                         cost_valid = cost_valid + np.sum(loss)
                     for v in range(valid_iter):
-                        v_begin = v*FLAGS.batch_size
-                        v_end = (v+1)*FLAGS.batch_size
+                        v_begin = v*FLAGS.valid_batch_size
+                        v_end = (v+1)*FLAGS.valid_batch_size
                         if(v == valid_iter-1):
                             if(v_end < valid_size):
                                 v_end = valid_size
@@ -91,8 +92,8 @@ def evaluate():
                     #for test set
                     index = 0
                     for t in range(test_iter):
-                        t_begin = t*FLAGS.batch_size
-                        t_end = (t+1)*FLAGS.batch_size
+                        t_begin = t*FLAGS.test_batch_size
+                        t_end = (t+1)*FLAGS.test_batch_size
                         if(t == test_iter-1):
                             if(t_end < test_size):
                                 t_end = test_size
@@ -121,7 +122,8 @@ def evaluate():
                         flag = True
                     #export
                     print "*****************************************************************"
-                    print "Epoch: %d" %global_step
+                    print global_step                    
+                    print "Epoch: %s" %global_step
                     print "Valid cost: %2.3g" %cost_valid
                     print "Valid_UA: %3.4g" %valid_acc_uw    
                     print "Valid_WA: %3.4g" %valid_acc_w
