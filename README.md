@@ -10,3 +10,8 @@ These codes have only been tested on ubuntu 16.04(x64), python2.7, cuda-8.0, cud
 ７、os
 
 The detailed information of this code can be found in 3-D.pdf, you can download if from the top of this page. 
+
+Citation
+If you used this code, please kindly consider citing the following paper:
+
+Chen, Mingyi & He, Xuanji & Yang, Jing & Zhang, Han. (2018). 3-D Convolutional Recurrent Neural Networks with Attention Model for Speech Emotion Recognition. IEEE Signal Processing Letters. 1-1. 10.1109/LSP.2018.2860246. 
