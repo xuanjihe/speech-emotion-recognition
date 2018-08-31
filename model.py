@@ -225,7 +225,7 @@ def build_model(inputX, is_training,keep_prob):
     fully2 = leaky_relu(fully2, 0.01)
     #fully2 = batch_norm_wrapper(fully2,is_training) 
     Ylogits = tf.matmul(fully2, fully3_weight) + fully3_bias
-    Ylogits = tf.nn.softmax(Ylogits)
+    #Ylogits = tf.nn.softmax(Ylogits)
     '''
     return Ylogits
     
