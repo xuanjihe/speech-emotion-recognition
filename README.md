@@ -14,4 +14,4 @@ The detailed information of this code can be found in 3-D.pdf, you can download 
 Citation
 If you used this code, please kindly consider citing the following paper:
 
-Chen, Mingyi & He, Xuanji & Yang, Jing & Zhang, Han. (2018). 3-D Convolutional Recurrent Neural Networks with Attention Model for Speech Emotion Recognition. IEEE Signal Processing Letters. 1-1. 10.1109/LSP.2018.2860246. 
+Mingyi Chen, Xuanji He, Jing Yang, Han Zhang, "3-D Convolutional Recurrent Neural Networks With Attention Model for Speech Emotion Recognition", Signal Processing Letters IEEE, vol. 25, no. 10, pp. 1440-1444, 2018.
