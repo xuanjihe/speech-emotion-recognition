@@ -11,7 +11,9 @@ These codes have only been tested on ubuntu 16.04(x64), python2.7, cuda-8.0, cud
 
 Demo
 For running a demo, after forking the repository, run the following scrit:
-1. python zscore.py
+   python zscore.py
+   python ExtractMel.py
+   python model.py
 
 
 The detailed information of this code can be found in 3-D.pdf, you can download if from the top of this page. 
