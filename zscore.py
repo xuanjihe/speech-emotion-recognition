@@ -99,7 +99,7 @@ def generate_label(emotion,classnum):
 def read_CASIA():
     
     train_num = 2928
-    filter_num = 20
+    filter_num = 40
     rootdir = '/home/jamhan/hxj/datasets/IEMOCAP_full_release'
     traindata1 = np.empty((train_num*300,filter_num),dtype=np.float32)
     traindata2 = np.empty((train_num*300,filter_num),dtype=np.float32)
