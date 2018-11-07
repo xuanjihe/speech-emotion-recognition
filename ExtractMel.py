@@ -328,7 +328,7 @@ def read_IEMOCAP():
         else:
             neu_index[n3] = l
             n3 = n3 + 1
-    for m in range(8):
+    for m in range(1):
         np.random.shuffle(neu_index)
         np.random.shuffle(hap_index)
         np.random.shuffle(sad_index)
@@ -375,7 +375,7 @@ def read_IEMOCAP():
         #print test_label[0:500,:]
         #f=open('./CASIA_40_delta.pkl','wb') 
         #output = './IEMOCAP40.pkl'
-        output = './IEMOCAP'+str(m)+'.pkl'
+        output = './IEMOCAP.pkl'
         f=open(output,'wb') 
         cPickle.dump((Train_data,Train_label,test_data,test_label,valid_data,valid_label,Valid_label,Test_label,pernums_test,pernums_valid),f)
         f.close()           
