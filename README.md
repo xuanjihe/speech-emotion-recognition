@@ -20,7 +20,7 @@ For running a demo, after forking the repository, run the following scrit:
    
 Note: when run python model.py, you will find that the recognition rate of happy is very poor, which is caused by the imbalance of the training samples. An effective method is to use the happy sample twice.
 
-If you want to download the <IEMOCAP> database, you can access the link:https://sail.usc.edu/iemocap/release_form.php
+If you want to download the `IEMOCAP` database, you can access the link:https://sail.usc.edu/iemocap/release_form.php
 
 The detailed information of this code can be found in 3-D.pdf, you can download if from the top of this page. 
 
