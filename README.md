@@ -23,6 +23,9 @@ Note: when run python model.py, you will find that the recognition rate of happy
 If you want to download the `IEMOCAP` database, you can access the link:https://sail.usc.edu/iemocap/release_form.php
 
 The detailed information of this code can be found in 3-D.pdf, you can download if from the top of this page. 
+## Author
+Xuanji He
+E-mail:xuanjihe@163.com
 
 ## Citation
 If you used this code, please kindly consider citing the following paper:
