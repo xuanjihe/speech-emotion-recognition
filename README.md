@@ -30,4 +30,4 @@ E-mail: xuanjihe@163.com
 ## Citation
 If you used this code, please kindly consider citing the following paper:
 
-Mingyi Chen, Xuanji He, Jing Yang, Han Zhang, "3-D Convolutional Recurrent Neural Networks With Attention Model for Speech Emotion Recognition", Signal Processing Letters IEEE, vol. 25, no. 10, pp. 1440-1444, 2018.
+Mingyi Chen, Xuanji He, Jing Yang, Han Zhang, "3-D Convolutional Recurrent Neural Networks With Attention Model for Speech Emotion Recognition", IEEE Signal Processing Letters, vol. 25, no. 10, pp. 1440-1444, 2018.
