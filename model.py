@@ -236,8 +236,8 @@ def train_op(norm):
     grad_clip = 5
     MODEL_SAVE_PATH = "./model2/"
     MODEL_NAME = "model.ckpt"
-    X = tf.placeholder(tf.float32, shape=[None, 200,40,3])
-    Y = tf.placeholder(tf.int32, shape=[None, 6])
+    X = tf.placeholder(tf.float32, shape=[None, 300,40,3])
+    Y = tf.placeholder(tf.int32, shape=[None, 4])
     is_training = tf.placeholder(tf.bool)
     # variable learning rate
     lr = tf.placeholder(tf.float32)
