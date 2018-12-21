@@ -94,10 +94,9 @@ def load_data():
         
 def read_IEMOCAP():
     eps = 1e-5
-    trnum = 1723
-    tnum = 259
+    tnum = 259 #the number of test utterance
     vnum = 298
-    test_num = 420
+    test_num = 420#the number of test 2s segments
     valid_num = 436
     train_num = 2928
     filter_num = 40
