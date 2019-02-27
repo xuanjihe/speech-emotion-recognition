@@ -260,9 +260,9 @@ def train_op(norm):
     saver=tf.train.Saver(tf.global_variables())
     
     train_data,train_label,test_data,test_label,valid_data,valid_label = load_data()
-    train_label = dense_to_one_hot(train_label,6)
-    test_label = dense_to_one_hot(test_label,6)
-    valid_label = dense_to_one_hot(valid_label,6)
+    train_label = dense_to_one_hot(train_label,len(np.unique(train_label)))
+    test_label = dense_to_one_hot(test_label,len(np.unique(test_label)))
+    valid_label = dense_to_one_hot(valid_label,len(np.unique(valid_label)))
     max_learning_rate = 0.0001
     min_learning_rate = 0.000001
     decay_speed = 1600
