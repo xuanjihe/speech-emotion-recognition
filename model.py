@@ -33,7 +33,7 @@ def Batch_Normalization(x, training, scope):
 def leaky_relu(x, leakiness=0.0):
     return tf.where(tf.less(x, 0.0), leakiness * x, x, name='leaky_relu')
 def load_data():
-    f = open('./CASIA_40_delta.pkl','rb')
+    f = open('./IEMOCAP.pkl','rb')
     train_data,train_label,test_data,test_label,valid_data,valid_label,Valid_label,Test_label,pernums_test,pernums_valid = cPickle.load(f)
     #train_data,train_label,test_data,test_label,valid_data,valid_label = cPickle.load(f)
     return train_data,train_label,test_data,test_label,valid_data,valid_label
