@@ -147,7 +147,7 @@ def acrnn(inputs, num_classes=4,
                                                              scope='LSTM1')
 
     # Attention layer
-    gru, alphas = attention(outputs1, return_alphas=True)
+    gru, alphas = attention(outputs1, 1, return_alphas=True)
     
     
     fully1 = tf.matmul(gru,fully1_weight) + fully1_bias
