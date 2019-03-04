@@ -156,5 +156,5 @@ def acrnn(inputs, num_classes=4,
     
     
     Ylogits = tf.matmul(fully1, fully2_weight) + fully2_bias
-    Ylogits = tf.nn.softmax(Ylogits)
+    #Ylogits = tf.nn.softmax(Ylogits)
     return Ylogits
