@@ -42,8 +42,8 @@ def load_traindata(file_path):
 
 def load_validdata(file_path):
     f = open(file_path,'rb')
-    data,label,Label,pernums = cPickle.load(f)
-    return data,label,Label,pernums
+    train_data,train_label,test_data,test_label,valid_data,valid_label,Valid_label,Test_label,pernums_test,pernums_valid = cPickle.load(f)
+    return train_data,train_label,test_data,test_label,valid_data,valid_label,Valid_label,Test_label,pernums_test,pernums_valid
 
 def dense_to_one_hot(labels_dense, num_classes):
     """Convert class labels from scalars to one-hot vectors."""
@@ -55,8 +55,7 @@ def dense_to_one_hot(labels_dense, num_classes):
 
 def train():
     #####load data##########
-    train_data,train_label = load_traindata(FLAGS.traindata_path)
-    valid_data,valid_label,Valid_label,pernums_valid = load_validdata(FLAGS.validdata_path)
+    train_data,train_label,test_data,test_label,valid_data,valid_label,Valid_label,Test_label,pernums_test,pernums_valid = load_traindata(FLAGS.traindata_path)
     train_label = dense_to_one_hot(train_label,FLAGS.num_classes)
     valid_label = dense_to_one_hot(valid_label,FLAGS.num_classes)
     Valid_label = dense_to_one_hot(Valid_label,FLAGS.num_classes)
