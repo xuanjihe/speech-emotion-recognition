@@ -35,15 +35,11 @@ tf.app.flags.DEFINE_string  ('model_name', 'model4.ckpt', 'model name')
 
 FLAGS = tf.app.flags.FLAGS
 
-def load_traindata(file_path):
-    f = open(file_path,'rb')
-    train_data,train_label = cPickle.load(f)
-    return train_data,train_label
-
-def load_validdata(file_path):
-    f = open(file_path,'rb')
+def load_data(in_dir):
+    f = open(in_dir,'rb')
     train_data,train_label,test_data,test_label,valid_data,valid_label,Valid_label,Test_label,pernums_test,pernums_valid = cPickle.load(f)
-    return train_data,train_label,test_data,test_label,valid_data,valid_label,Valid_label,Test_label,pernums_test,pernums_valid
+    #train_data,train_label,test_data,test_label,valid_data,valid_label = cPickle.load(f)
+    return train_data,train_label,test_data,test_label,valid_data,valid_label
 
 def dense_to_one_hot(labels_dense, num_classes):
     """Convert class labels from scalars to one-hot vectors."""
@@ -55,6 +51,8 @@ def dense_to_one_hot(labels_dense, num_classes):
 
 def train():
     #####load data##########
+    
+    load_data(FLAGS.traindata_path)
     train_data,train_label,test_data,test_label,valid_data,valid_label,Valid_label,Test_label,pernums_test,pernums_valid = load_traindata(FLAGS.traindata_path)
     train_label = dense_to_one_hot(train_label,FLAGS.num_classes)
     valid_label = dense_to_one_hot(valid_label,FLAGS.num_classes)
