@@ -96,7 +96,7 @@ def generate_label(emotion,classnum):
     return label
         
         
-def read_CASIA():
+def read_IEMOCAP():
     
     train_num = 2928
     filter_num = 40
@@ -211,7 +211,7 @@ def read_CASIA():
 
 
 if __name__=='__main__':
-    read_CASIA()
+    read_IEMOCAP()
     #print "test_num:", test_num
     #print "train_num:", train_num
 #    n = wgn(x, 6)
